@@ -15,12 +15,10 @@ export const AuthProvider = ({ children }) => {
     const initializeAuth = async () => {
       if (token) {
         try {
-          // Fetch current user demographics to verify token validation
-          // We can use a dummy endpoint or use GET /credit/signals as a validation,
-          // but let's assume we have a user state since we got the token,
-          // and decode user details from the token or set a dummy user profile
-          // since the token indicates authenticity.
-          setUser({ email: 'user@example.com', first_name: 'Marcus', last_name: 'Chen' });
+          const response = await axios.get(`${API_BASE}/auth/me`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setUser(response.data);
         } catch (err) {
           console.error("Token verification failed:", err);
           logout();
@@ -38,8 +36,13 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${API_BASE}/auth/login`, { email, password });
       const { access_token } = response.data;
       localStorage.setItem('token', access_token);
+      
+      const profileResponse = await axios.get(`${API_BASE}/auth/me`, {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      
       setToken(access_token);
-      setUser({ email, first_name: 'Marcus', last_name: 'Chen' });
+      setUser(profileResponse.data);
       return true;
     } catch (err) {
       localStorage.removeItem('token');

@@ -59,7 +59,7 @@ export const Advisor = () => {
     try {
       const response = await axios.get('/investment/chat/status');
       setChatStatus(response.data);
-      
+
       // If assessment is complete, load determined portfolio
       if (response.data.chat_completed) {
         loadPortfolio();
@@ -108,7 +108,7 @@ export const Advisor = () => {
         question_id: questionId,
         selected_option: option
       });
-      
+
       const r = response.data;
       if (r.chat_completed) {
         setMessages((prev) => [
@@ -174,22 +174,22 @@ export const Advisor = () => {
   return (
     <div className="space-y-8 p-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">Investment Risk Advisor</h1>
-        <p className="text-slate-400 mt-1">Complete your risk check dialogue to simulate portfolio growth expectations.</p>
+        <h1 className="text-3xl font-extrabold tracking-tight text-textPrimary">Investment Risk Advisor</h1>
+        <p className="text-muted mt-1 text-sm">Complete your risk check dialogue to simulate portfolio growth expectations.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Side: Conversational Chat Console */}
         <div className="lg:col-span-5 flex flex-col h-[520px] glass-card overflow-hidden">
-          <div className="p-4 border-b border-white/5 flex justify-between items-center bg-slate-900/30">
-            <span className="text-sm font-semibold text-white flex items-center gap-2">
-              <MessageSquare size={16} className="text-accentCyan" />
+          <div className="p-4 border-b border-white/5 flex justify-between items-center bg-bgSurface/30">
+            <span className="text-sm font-semibold text-textPrimary flex items-center gap-2">
+              <MessageSquare size={16} className="text-primary" />
               Advisor Chat
             </span>
             {riskTier && (
               <button
                 onClick={handleReset}
-                className="text-[10px] uppercase tracking-wider font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors"
+                className="text-[10px] uppercase tracking-wider font-semibold text-muted hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <RefreshCw size={10} />
                 Retake Quiz
@@ -203,15 +203,13 @@ export const Advisor = () => {
               const isBot = msg.sender === 'bot';
               return (
                 <div key={idx} className={`flex gap-3 max-w-[85%] ${isBot ? 'mr-auto' : 'ml-auto flex-row-reverse'}`}>
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center border shrink-0 ${
-                    isBot ? 'bg-cyan-500/10 border-cyan-500/20 text-accentCyan' : 'bg-emerald-500/10 border-emerald-500/20 text-accentEmerald'
-                  }`}>
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center border shrink-0 ${isBot ? 'bg-primary/10 border-primary/20 text-primary' : 'bg-secondary/10 border-secondary/20 text-secondary'
+                    }`}>
                     {isBot ? <Bot size={16} /> : <UserIcon size={16} />}
                   </div>
                   <div className="space-y-3">
-                    <div className={`p-3 rounded-2xl text-xs leading-relaxed ${
-                      isBot ? 'bg-slate-900/50 border border-white/5 text-slate-200' : 'bg-emerald-500/15 border border-emerald-500/20 text-emerald-100'
-                    }`}>
+                    <div className={`p-3 rounded-2xl text-xs leading-relaxed ${isBot ? 'bg-bgSurface/50 border border-white/5 text-textSecondary' : 'bg-secondary/15 border border-secondary/20 text-textPrimary'
+                      }`}>
                       {msg.text}
                     </div>
                     {/* Render choice options for bot message if active */}
@@ -222,7 +220,7 @@ export const Advisor = () => {
                             key={opt}
                             disabled={chatLoading}
                             onClick={() => handleSelectOption(msg.questionId, opt)}
-                            className="w-full text-left p-2.5 text-xs rounded-xl bg-slate-900/40 hover:bg-cyan-500/10 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-accentCyan transition-all"
+                            className="w-full text-left p-2.5 text-xs rounded-xl bg-bgDark/40 hover:bg-primary/10 border border-white/5 hover:border-primary/30 text-textSecondary hover:text-primary transition-all cursor-pointer"
                           >
                             {opt}
                           </button>
@@ -243,43 +241,118 @@ export const Advisor = () => {
             <>
               {/* Asset Allocation Breakdown */}
               <div className="p-6 glass-card space-y-4">
-                <h2 className="text-lg font-bold text-white flex items-center gap-2 border-b border-white/5 pb-3">
-                  <TrendingUp size={18} className="text-accentEmerald" />
+                <h2 className="text-lg font-semibold text-textPrimary flex items-center gap-2 border-b border-white/5 pb-3">
+                  <TrendingUp size={18} className="text-success" />
                   Recommended Asset Allocation ({riskTier})
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="p-4 bg-slate-900/40 border border-white/5 rounded-xl text-center">
-                    <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Government Bonds</span>
-                    <div className="text-xl font-bold text-white mt-1">{portfolio.bonds}%</div>
+                  <div className="p-4 bg-bgSurface/40 border border-white/5 rounded-xl text-center flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Government Bonds</span>
+                      <div className="text-xl font-bold text-textPrimary mt-1">{portfolio.bonds}%</div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-white/5 text-[10px] text-muted text-left space-y-1.5">
+                      <div className="flex justify-between">
+                        <span>Initial:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(initialAmount) * (portfolio.bonds / 100)).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Monthly:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(monthlyContribution) * (portfolio.bonds / 100)).toLocaleString()}</span>
+                      </div>
+                      {simData && (
+                        <div className="flex justify-between text-primary/95 border-t border-white/5 pt-1.5 mt-1.5">
+                          <span>Projected:</span>
+                          <span className="font-mono font-bold">${Math.round(Number(simData.future_value_expected) * (portfolio.bonds / 100)).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-4 bg-slate-900/40 border border-white/5 rounded-xl text-center">
-                    <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Index ETFs</span>
-                    <div className="text-xl font-bold text-accentCyan mt-1">{portfolio.etfs}%</div>
+
+                  <div className="p-4 bg-bgSurface/40 border border-white/5 rounded-xl text-center flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Index ETFs</span>
+                      <div className="text-xl font-bold text-primary mt-1">{portfolio.etfs}%</div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-white/5 text-[10px] text-muted text-left space-y-1.5">
+                      <div className="flex justify-between">
+                        <span>Initial:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(initialAmount) * (portfolio.etfs / 100)).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Monthly:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(monthlyContribution) * (portfolio.etfs / 100)).toLocaleString()}</span>
+                      </div>
+                      {simData && (
+                        <div className="flex justify-between text-primary/95 border-t border-white/5 pt-1.5 mt-1.5">
+                          <span>Projected:</span>
+                          <span className="font-mono font-bold">${Math.round(Number(simData.future_value_expected) * (portfolio.etfs / 100)).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-4 bg-slate-900/40 border border-white/5 rounded-xl text-center">
-                    <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Growth Equities</span>
-                    <div className="text-xl font-bold text-accentEmerald mt-1">{portfolio.equities}%</div>
+
+                  <div className="p-4 bg-bgSurface/40 border border-white/5 rounded-xl text-center flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Growth Equities</span>
+                      <div className="text-xl font-bold text-success mt-1">{portfolio.equities}%</div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-white/5 text-[10px] text-muted text-left space-y-1.5">
+                      <div className="flex justify-between">
+                        <span>Initial:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(initialAmount) * (portfolio.equities / 100)).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Monthly:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(monthlyContribution) * (portfolio.equities / 100)).toLocaleString()}</span>
+                      </div>
+                      {simData && (
+                        <div className="flex justify-between text-primary/95 border-t border-white/5 pt-1.5 mt-1.5">
+                          <span>Projected:</span>
+                          <span className="font-mono font-bold">${Math.round(Number(simData.future_value_expected) * (portfolio.equities / 100)).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-4 bg-slate-900/40 border border-white/5 rounded-xl text-center">
-                    <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Cryptocurrency</span>
-                    <div className="text-xl font-bold text-accentRose mt-1">{portfolio.crypto}%</div>
+
+                  <div className="p-4 bg-bgSurface/40 border border-white/5 rounded-xl text-center flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Cryptocurrency</span>
+                      <div className="text-xl font-bold text-danger mt-1">{portfolio.crypto}%</div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-white/5 text-[10px] text-muted text-left space-y-1.5">
+                      <div className="flex justify-between">
+                        <span>Initial:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(initialAmount) * (portfolio.crypto / 100)).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Monthly:</span>
+                        <span className="font-mono text-textPrimary font-medium">${Math.round(Number(monthlyContribution) * (portfolio.crypto / 100)).toLocaleString()}</span>
+                      </div>
+                      {simData && (
+                        <div className="flex justify-between text-primary/95 border-t border-white/5 pt-1.5 mt-1.5">
+                          <span>Projected:</span>
+                          <span className="font-mono font-bold">${Math.round(Number(simData.future_value_expected) * (portfolio.crypto / 100)).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Compound Growth Projections */}
               <div className="p-6 glass-card space-y-6">
-                <h2 className="text-lg font-bold text-white flex items-center gap-2 border-b border-white/5 pb-2">
-                  <Sliders size={18} className="text-accentCyan" />
+                <h2 className="text-lg font-semibold text-textPrimary flex items-center gap-2 border-b border-white/5 pb-2">
+                  <Sliders size={18} className="text-primary" />
                   Compound growth Simulator
                 </h2>
-                
+
                 {/* Sliders Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-xs uppercase font-semibold tracking-wider text-slate-500">Initial Capital</span>
-                      <span className="text-xs font-mono text-white">${initialAmount}</span>
+                      <span className="text-xs uppercase font-semibold tracking-wider text-muted">Initial Capital</span>
+                      <span className="text-xs font-mono text-textPrimary font-semibold">${initialAmount}</span>
                     </div>
                     <input
                       type="range"
@@ -288,14 +361,14 @@ export const Advisor = () => {
                       step="100"
                       value={initialAmount}
                       onChange={(e) => setInitialAmount(e.target.value)}
-                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
                     />
                   </div>
 
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-xs uppercase font-semibold tracking-wider text-slate-500">Monthly Addition</span>
-                      <span className="text-xs font-mono text-white">${monthlyContribution}</span>
+                      <span className="text-xs uppercase font-semibold tracking-wider text-muted">Monthly Addition</span>
+                      <span className="text-xs font-mono text-textPrimary font-semibold">${monthlyContribution}</span>
                     </div>
                     <input
                       type="range"
@@ -304,14 +377,14 @@ export const Advisor = () => {
                       step="10"
                       value={monthlyContribution}
                       onChange={(e) => setMonthlyContribution(e.target.value)}
-                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
                     />
                   </div>
 
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-xs uppercase font-semibold tracking-wider text-slate-500">Time Horizon</span>
-                      <span className="text-xs font-mono text-white">{years} Years</span>
+                      <span className="text-xs uppercase font-semibold tracking-wider text-muted">Time Horizon</span>
+                      <span className="text-xs font-mono text-textPrimary font-semibold">{years} Years</span>
                     </div>
                     <input
                       type="range"
@@ -320,7 +393,7 @@ export const Advisor = () => {
                       step="1"
                       value={years}
                       onChange={(e) => setYears(e.target.value)}
-                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                      className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
                     />
                   </div>
                 </div>
@@ -332,20 +405,20 @@ export const Advisor = () => {
                       <AreaChart data={simData.projection_data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                           <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="hsl(188, 86%, 43%)" stopOpacity={0.2}/>
-                            <stop offset="95%" stopColor="hsl(188, 86%, 43%)" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#2563EB" stopOpacity={0.25} />
+                            <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                        <XAxis dataKey="year" stroke="#475569" fontSize={10} tickLine={false} />
-                        <YAxis stroke="#475569" fontSize={10} tickLine={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
+                        <XAxis dataKey="year" stroke="#94a3b8" fontSize={10} tickLine={false} />
+                        <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} />
                         <Tooltip
-                          contentStyle={{ background: '#121826', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}
+                          contentStyle={{ background: '#1E293B', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}
                           labelStyle={{ color: '#94a3b8', fontSize: '10px' }}
                           itemStyle={{ fontSize: '11px', color: '#fff' }}
                         />
-                        <Area type="monotone" dataKey="expected_value" name="Expected Growth" stroke="#06b6d4" fillOpacity={1} fill="url(#colorValue)" strokeWidth={2} />
-                        <Line type="monotone" dataKey="total_invested" name="Cumulative Cash" stroke="#475569" strokeDasharray="4 4" dot={false} />
+                        <Area type="monotone" dataKey="expected_value" name="Expected Growth" stroke="#2563EB" fillOpacity={1} fill="url(#colorValue)" strokeWidth={2} />
+                        <Line type="monotone" dataKey="total_invested" name="Cumulative Cash" stroke="#64748B" strokeDasharray="4 4" dot={false} />
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -356,15 +429,15 @@ export const Advisor = () => {
                   <div className="grid grid-cols-3 gap-4 border-t border-white/5 pt-4">
                     <div>
                       <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Total Invested</span>
-                      <div className="text-sm font-bold text-slate-300 mt-1">${simData.total_invested.toLocaleString()}</div>
+                      <div className="text-sm font-bold text-textPrimary font-mono mt-1">${simData.total_invested.toLocaleString()}</div>
                     </div>
                     <div>
                       <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Low Return (FV)</span>
-                      <div className="text-sm font-bold text-accentRose mt-1">${simData.future_value_conservative.toLocaleString()}</div>
+                      <div className="text-sm font-bold text-danger font-mono mt-1">${simData.future_value_conservative.toLocaleString()}</div>
                     </div>
                     <div>
                       <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Expected Return (FV)</span>
-                      <div className="text-sm font-bold text-accentEmerald mt-1">${simData.future_value_expected.toLocaleString()}</div>
+                      <div className="text-sm font-bold text-success font-mono mt-1">${simData.future_value_expected.toLocaleString()}</div>
                     </div>
                   </div>
                 )}
@@ -373,9 +446,9 @@ export const Advisor = () => {
           ) : (
             /* Empty State */
             <div className="h-full flex flex-col items-center justify-center p-12 glass-card text-center min-h-[420px]">
-              <TrendingUp size={48} className="text-slate-700 animate-pulse mb-4" />
-              <h3 className="text-lg font-semibold text-slate-200">Growth Projection Pending</h3>
-              <p className="text-slate-500 text-sm max-w-sm mt-1">
+              <TrendingUp size={48} className="text-muted/40 animate-pulse mb-4" />
+              <h3 className="text-base font-semibold text-textPrimary">Growth Projection Pending</h3>
+              <p className="text-muted text-xs max-w-sm mt-1 leading-relaxed">
                 Complete the risk profile questionnaire on the left to unlock recommended allocations and simulations.
               </p>
             </div>

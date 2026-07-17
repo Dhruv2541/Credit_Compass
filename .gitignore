@@ -1,0 +1,45 @@
+# Python / Backend ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+backend/venv/
+backend/env/
+
+# SQLite Database local files
+*.db
+*.sqlite3
+backend/credit_compass.db
+backend/credit_compass.db-journal
+backend/credit_compass.db-wal
+
+# Node / Frontend ignores
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# Environment secrets
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

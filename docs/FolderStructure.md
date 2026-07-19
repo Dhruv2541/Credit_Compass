@@ -75,7 +75,8 @@ frontend/
 │   ├── components/      # Shared UI Components
 │   │   ├── ui/          # Atomic components (buttons, input fields)
 │   │   ├── charts/      # Recharts wrappers (Gauge, Projection lines)
-│   │   └── layout/      # Sidebar, Topbar, Persistent Footer
+│   │   ├── layout/      # Sidebar, Topbar, Persistent Footer
+│   │   └── IntroAnimation/ # Custom high-compatibility 2D canvas physics entrance animation
 │   ├── context/         # React Context API
 │   │   └── AuthContext.jsx # Global User login states & tokens
 │   ├── hooks/           # Custom reusable React hooks

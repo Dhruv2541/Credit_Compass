@@ -6,6 +6,8 @@ import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { Advisor } from './pages/Advisor';
 import { LayoutDashboard, MessageSquareCode, LogOut, Compass } from 'lucide-react';
+import { IntroAnimation } from './components/IntroAnimation/IntroAnimation';
+import { useIntroSession } from './components/IntroAnimation/useIntroSession';
 
 // Protected Route Guard Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -117,8 +119,11 @@ const DashboardLayout = ({ children }) => {
 };
 
 export const App = () => {
+  const { showIntro, completeIntro } = useIntroSession();
+
   return (
     <AuthProvider>
+      {showIntro && <IntroAnimation onComplete={completeIntro} />}
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />

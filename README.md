@@ -15,6 +15,7 @@ Credit Compass is an explainable AI-powered FinTech platform designed to provide
 - **Growth Projections Simulator**: Compounding investment trajectory charts mapped via Recharts, featuring dynamic initial, monthly, and year sliders.
 - **Educational Disclaimer**: Persistent visibility across dashboard panels ensuring regulatory clarity.
 - **Modern FinTech Dark Theme**: Styled with Tailwind CSS v4 featuring premium glassmorphism, harmonious HSL palettes, and customized scrollbars.
+- **Premium Entrance Animation**: High-compatibility HTML5 Canvas 2D engine inspired by WebGPU visuals, featuring a physics-based Simplex noise particle and petal dissolve reveal sequence (plays once per session with a Skip option).
 
 ---
 

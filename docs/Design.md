@@ -165,6 +165,14 @@ We standardise on **Lucide React Icons**:
     to { opacity: 1; transform: translateY(0); }
   }
   ```
+- **Premium Entrance Animation**: High-compatibility HTML5 Canvas 2D physics transition engine:
+  - **Phase 1 (0.0s – 0.8s)**: Smooth fade-in of all elements and needle rotation (settling at 0 rad).
+  - **Phase 2 (0.8s – 1.2s)**: Stable resolved state ensuring readable branding.
+  - **Phase 2.5 (1.2s – 1.6s)**: Subtle animated noise wobble and edge particle detachment.
+  - **Phase 3 (1.6s – 3.6s)**: Organic left-to-right dissolve using Simplex noise, spawning drifting emerald dust and falling cyan/blue petals.
+  - **Phase 4 (3.6s – 4.6s)**: Full overlay background fade-out to reveal the login screen.
+  - **Reduced Motion Fallback**: Replaces the physics and particles with a simple, elegant 1.5s fade-in/fade-out transition.
+  - **Performance Optimization**: Adjusts particle grid sampling density based on device CPU cores and available memory.
 
 ---
 

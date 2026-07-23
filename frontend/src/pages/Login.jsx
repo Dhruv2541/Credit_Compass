@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Compass, ShieldAlert } from 'lucide-react';
 
+import TextType from '../components/TextType/TextType';
+
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +36,22 @@ export const Login = () => {
           <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 text-accentEmerald">
             <Compass size={28} className="animate-spin-slow" />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-white">Credit Compass</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-white h-8 flex items-center justify-center">
+            <TextType 
+              texts={["Alternative Credit Assessment", "Smart Financial Insights", "Welcome to Credit Compass"]}
+              typingSpeed={75}
+              deletingSpeed={50}
+              pauseDuration={1500}
+              showCursor={true}
+              cursorCharacter="_"
+              variableSpeedEnabled={false}
+              variableSpeedMin={60}
+              variableSpeedMax={120}
+              cursorBlinkDuration={0.5}
+              loop={false}
+              className="text-accentEmerald"
+            />
+          </h2>
           <p className="text-sm text-slate-400 mt-1">Navigate your financial health and investments</p>
         </div>
 

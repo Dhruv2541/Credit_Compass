@@ -1,0 +1,13 @@
+.text-type-cursor {
+  display: inline-block;
+  animation: text-type-blink var(--cursor-blink-duration, 0.9s) step-end infinite;
+}
+
+@keyframes text-type-blink {
+  from, to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

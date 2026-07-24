@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bgDark: hsl(222, 47%, 5%);
+  --color-bgDark: #080C14;
   --color-bgSurface: hsl(222, 36%, 11%);
   --color-accentEmerald: hsl(162, 76%, 41%);
   --color-accentCyan: hsl(188, 86%, 43%);
@@ -16,28 +16,21 @@ body {
   @apply bg-bgDark text-slate-100 font-sans antialiased min-h-screen overflow-x-hidden;
 }
 
-/* Glassmorphism Styles matching Design.md */
 .glass-card {
-  background: rgba(18, 24, 38, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border-radius: 16px;
+  @apply bg-slate-900/40 backdrop-blur-md border border-slate-800/70 rounded-2xl shadow-2xl hover:border-slate-700/60 transition-all duration-300;
 }
 
 .glass-sidebar {
-  background: rgba(18, 24, 38, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  @apply bg-slate-900/50 backdrop-blur-md border-r border-slate-800/70 transition-all;
 }
 
 .glass-navbar {
-  background: rgba(11, 15, 25, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  @apply bg-slate-900/40 backdrop-blur-md border-b border-slate-800/70 transition-all;
+}
+
+.tech-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Custom Scrollbars */
@@ -57,4 +50,94 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Advisor Chat Glow & Reveal Animation Keyframes */
+@keyframes question-bubble-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    box-shadow: 0 0 0px rgba(15, 179, 204, 0);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  15% {
+    box-shadow: 0 0 15px 2px rgba(15, 179, 204, 0.35);
+    border-color: rgba(15, 179, 204, 0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 0px rgba(15, 179, 204, 0);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.question-bubble-enter {
+  animation: question-bubble-reveal 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes option-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dot-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.dot-thinking {
+  animation: dot-pulse 1s infinite ease-in-out;
+  display: inline-block;
+}
+
+/* Button Idle Shimmer Overlay */
+@keyframes button-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+  40%, 100% {
+    transform: translateX(150%) skewX(-15deg);
+  }
+}
+
+.animate-btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-btn-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-150%) skewX(-15deg);
+  animation: button-shimmer 3s infinite ease-in-out;
+  pointer-events: none;
 }

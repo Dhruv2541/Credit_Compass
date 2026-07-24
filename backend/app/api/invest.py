@@ -23,7 +23,9 @@ def get_chat_status(
     if assessment and assessment.raw_responses_json:
         raw_responses = {int(k): v for k, v in json.loads(assessment.raw_responses_json).items()}
         
-    return invest_service.get_chat_status(raw_responses)
+    status_resp = invest_service.get_chat_status(raw_responses)
+    status_resp.raw_responses = {str(k): v for k, v in raw_responses.items()}
+    return status_resp
 
 @router.post("/chat/message", response_model=ChatMessageResponse)
 def submit_chat_message(
@@ -135,7 +137,8 @@ def reset_chat_progress(
         chat_completed=False,
         next_question_id=QUESTIONS[0]["id"],
         next_question_text=QUESTIONS[0]["text"],
-        options=QUESTIONS[0]["options"]
+        options=QUESTIONS[0]["options"],
+        raw_responses={}
     )
 # Import QUESTIONS for reset route
 from app.services.invest_service import QUESTIONS

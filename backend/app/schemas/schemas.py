@@ -79,6 +79,7 @@ class ChatQuestionResponse(BaseModel):
     next_question_id: Optional[int] = None
     next_question_text: Optional[str] = None
     options: Optional[List[str]] = None
+    raw_responses: Optional[Dict[str, str]] = None
 
 class ChatMessageRequest(BaseModel):
     question_id: int
